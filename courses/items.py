@@ -14,3 +14,4 @@ class CourseItem(scrapy.Item):
     url = scrapy.Field()
     code = scrapy.Field()
     name = scrapy.Field()
+    builds_on = scrapy.Field()

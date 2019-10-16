@@ -18,7 +18,7 @@ def create_output(courses):
         if course["builds_on"]:
             for req in course["builds_on"]:
                 links.append(
-                    {"source": course["name"], "target": req, "relationship": ""}
+                    {"source": course["code"], "target": req, "relationship": ""}
                 )
 
     return {"nodes": nodes, "links": links}

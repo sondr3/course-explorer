@@ -12,13 +12,17 @@ class CoursesSpider(scrapy.Spider):
     def parse(self, response):
         content = response.css("div.item-list > ul")[0]
         for course in content.xpath("li/a"):
-            yield scrapy.Request(f"{URL}{course.attrib['href']}", callback=self.parse_course)
+            yield scrapy.Request(
+                f"{URL}{course.attrib['href']}", callback=self.parse_course
+            )
 
     @staticmethod
     def parse_course(response):
         course = CourseItem()
-        top = response.css("div.content-top > div.block > div.content > div.item-list > ul > li")
-        course["name"]= response.css("h1::text").get().strip()
+        top = response.css(
+            "div.content-top > div.block > div.content > div.item-list > ul > li"
+        )
+        course["name"] = response.css("h1::text").get().strip()
         course["code"] = top[2].css("span::text")[1].get().strip()
         course["url"] = response.url
         course["builds_on"] = None
@@ -38,4 +42,3 @@ class CoursesSpider(scrapy.Spider):
             course["builds_on"] = None
 
         return course
-

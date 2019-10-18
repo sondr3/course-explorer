@@ -4,7 +4,13 @@ const height = 1000,
 const svg = d3
   .select("svg")
   .attr("width", width)
-  .attr("height", height);
+  .attr("height", height)
+  .call(
+    d3.zoom().on("zoom", function() {
+      svg.attr("transform", d3.event.transform);
+    })
+  )
+  .append("g");
 
 const data = d3.json("graph.json").then(graph => {
   console.log(graph);

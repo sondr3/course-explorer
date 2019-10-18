@@ -13,7 +13,7 @@ def create_output(courses):
     links = list()
 
     for course in courses:
-        nodes.append({ "code": course["code"], "name": course["name"], "description": ""})
+        nodes.append({"id": course["code"], "name": course["name"], "description": ""})
 
         if course["builds_on"]:
             for req in course["builds_on"]:

@@ -4,7 +4,8 @@
   "description": "An attempt at graphing course dependencies at UiB",
   "main": "index.js",
   "scripts": {
-    "dev": "http-server visualization"
+    "dev": "http-server visualization",
+    "fmt": "prettier --write"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,10 @@
   },
   "homepage": "https://github.com/sondr3/course-explorer#readme",
   "devDependencies": {
+    "@sondr3/prettier": "^0.1.1",
     "d3": "^5.12.0",
-    "http-server": "^0.11.1"
-  }
+    "http-server": "^0.11.1",
+    "prettier": "^1.18.2"
+  },
+  "prettier": "@sondr3/prettier"
 }

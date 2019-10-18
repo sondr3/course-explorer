@@ -5,6 +5,20 @@ from courses.items import CourseItem
 URL = "https://www.uib.no"
 
 
+def find_dependent_courses(content):
+    result = []
+    for i, title in enumerate(content.xpath("h3/text()").getall()):
+        if title.lower() == "Tilrådde forkunnskapar".lower():
+            sub_content = content[i].xpath("p/a")
+            for dep_course in sub_content:
+                if dep_course.attrib['href'].startswith("/nb/emne"):
+                    result.append(dep_course.xpath("text()").get())
+
+            return result
+
+    return None
+
+
 class CoursesSpider(scrapy.Spider):
     name = "courses"
     start_urls = ["https://www.uib.no/emne/"]
@@ -31,14 +45,6 @@ class CoursesSpider(scrapy.Spider):
             return course
 
         content = response.css("div#uib-tabs-emnebeskrivelse > div")
-
-        for i, title in enumerate(content.xpath("h3/text()").getall()):
-            if title.lower() == "Tilrådde forkunnskapar".lower():
-                sub_content = content[i]
-                course["builds_on"] = sub_content.xpath("p/a/text()").getall()
-                break
-
-        if not course["builds_on"]:
-            course["builds_on"] = None
+        course["builds_on"] = find_dependent_courses(content)
 
         return course

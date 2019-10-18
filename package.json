@@ -1,0 +1,23 @@
+{
+  "name": "course-explorer",
+  "version": "0.1.0",
+  "description": "An attempt at graphing course dependencies at UiB",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server visualization"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sondr3/course-explorer.git"
+  },
+  "author": "Sondre Nilsen <nilsen.sondre@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sondr3/course-explorer/issues"
+  },
+  "homepage": "https://github.com/sondr3/course-explorer#readme",
+  "devDependencies": {
+    "d3": "^5.12.0",
+    "http-server": "^0.11.1"
+  }
+}

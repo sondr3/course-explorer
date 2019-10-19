@@ -1,4 +1,6 @@
 import json
+from collections import defaultdict
+from itertools import takewhile
 
 
 def read_json():
@@ -8,7 +10,12 @@ def read_json():
     return content
 
 
-def create_output(courses):
+def write_json(filename, content):
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(json.dumps(content, indent=2, ensure_ascii=False))
+
+
+def create_graph(courses):
     nodes = dict()
     links = list()
 
@@ -27,7 +34,17 @@ def create_output(courses):
     return {"nodes": list(nodes.values()), "links": links}
 
 
+def find_course_codes(courses):
+    codes = defaultdict(int)
+
+    for course in courses:
+        code = "".join(takewhile(str.isalpha, course["code"]))
+        codes[code] += 1
+
+    return codes
+
+
 if __name__ == "__main__":
     file = read_json()
-    output = create_output(file)
-    print(json.dumps(output))
+    write_json("graph.json", create_graph(file))
+    write_json("codes.json", find_course_codes(file))

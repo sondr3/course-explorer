@@ -45,8 +45,22 @@ const data = d3.json("graph.json").then(graph => {
     .attr("r", 20)
     .style("fill", "#69b3a2");
 
+  node.each(d => {
+    d.degree = 0;
+  });
+
+  link.each(d => {
+    d.source.degree += 1;
+    d.target.degree += 1;
+  });
+
   node.append("title").text(d => {
     return d.name;
+  });
+
+  node.attr("r", d => {
+    const minRadius = 10;
+    return minRadius + d.degree * 3;
   });
 
   simulation.nodes(graph.nodes).on("tick", ticked);

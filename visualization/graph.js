@@ -42,17 +42,8 @@ const data = d3.json("graph.json").then(graph => {
     .data(graph.nodes)
     .enter()
     .append("circle")
-    .attr("r", 20)
+    .attr("r", d => d.degree)
     .style("fill", "#69b3a2");
-
-  node.each(d => {
-    d.degree = 0;
-  });
-
-  link.each(d => {
-    d.source.degree += 1;
-    d.target.degree += 1;
-  });
 
   node.append("title").text(d => {
     return d.name;

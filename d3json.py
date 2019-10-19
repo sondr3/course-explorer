@@ -9,19 +9,22 @@ def read_json():
 
 
 def create_output(courses):
-    nodes = list()
+    nodes = dict()
     links = list()
 
     for course in courses:
-        nodes.append({"id": course["code"], "name": course["name"], "description": ""})
+        nodes[course['code']] = {"id": course["code"], "name": course["name"], "description": "", "degree": 0}
 
+    for course in courses:
         if course["builds_on"]:
             for req in course["builds_on"]:
                 links.append(
                     {"source": course["code"], "target": req, "relationship": ""}
                 )
+                nodes[req]['degree'] += 1
+                nodes[course['code']]['degree'] += 1
 
-    return {"nodes": nodes, "links": links}
+    return {"nodes": list(nodes.values()), "links": links}
 
 
 if __name__ == "__main__":

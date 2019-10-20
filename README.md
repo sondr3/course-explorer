@@ -8,13 +8,12 @@ automatically using Python.
 
 ## How
 
-Use Nix or NixOS, run `nix shell` and `scrapy crawl courses -o courses.jl`. This
-is a kind of JSON file where each line is a single JSON object. Do this because
-of performance, it is faster to just append without having to read a JSON file
-and append to a list. And furthermore, the Scrapy guide recommends using it for
-when you have large datasets. Though >1Mb might not qualify.
-
-To convert back into regular ol' JSON, install `jq` and run `jq -s . courses.jl > courses.json`.
+Most everything is done automatically, to find all the institutes and faculties
+at UiB run `scrapy crawl faculties -o faculties.jl`. Then, to get the courses
+themselves run `scrapy crawl courses -o courses.jl`; Finally, to actually build
+the graph and everything run `python d3json.py` and it'll create a `graph.json`
+file. You can now start the development server with `npm run dev` (though you
+should probably run `npm i` first) and view the exploding graph.
 
 ## License
 

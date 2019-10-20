@@ -17,3 +17,7 @@ class CourseItem(scrapy.Item):
     builds_on = scrapy.Field()
     institute = scrapy.Field()
 
+
+class FacultyItem(scrapy.Item):
+    name = scrapy.Field()
+    institutes = scrapy.Field()

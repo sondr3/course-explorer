@@ -1,0 +1,78 @@
+[
+  {
+    "name": "Det humanistiske fakultet",
+    "institutes": [
+      "Institutt for arkeologi, historie, kultur- og religionsvitenskap",
+      "Institutt for filosofi og førstesemesterstudier",
+      "Institutt for fremmedspråk",
+      "Institutt for lingvistiske, litterære og estetiske studier"
+    ]
+  },
+  {
+    "name": "Det juridiske fakultet",
+    "institutes": [
+      "Bergen Center for Competition Law and Economics (BECCLE)",
+      "Dragefjellet lærings- og formidlingssenter (DLF)",
+      "Norsk senter for kinesisk rett"
+    ]
+  },
+  {
+    "name": "Det matematisk-naturvitenskapelige fakultet",
+    "institutes": [
+      "Geofysisk institutt",
+      "Institutt for biovitenskap",
+      "Institutt for fysikk og teknologi",
+      "Institutt for geovitenskap",
+      "Institutt for informatikk",
+      "Kjemisk institutt",
+      "Matematisk institutt"
+    ]
+  },
+  {
+    "name": "Det medisinske fakultet",
+    "institutes": [
+      "Institutt for biomedisin",
+      "Institutt for global helse og samfunnsmedisin",
+      "Institutt for klinisk odontologi",
+      "Klinisk institutt 1",
+      "Klinisk institutt 2"
+    ]
+  },
+  {
+    "name": "Det psykologiske fakultet",
+    "institutes": [
+      "HEMIL-senteret",
+      "Institutt for biologisk og medisinsk psykologi",
+      "Institutt for klinisk psykologi",
+      "Institutt for pedagogikk",
+      "Institutt for samfunnspsykologi"
+    ]
+  },
+  {
+    "name": "Det samfunnsvitenskapelige fakultet",
+    "institutes": [
+      "Institutt for administrasjon og organisasjonsvitenskap",
+      "Institutt for geografi",
+      "Institutt for informasjons- og medievitenskap",
+      "Institutt for sammenliknende politikk",
+      "Institutt for sosialantropologi",
+      "Institutt for økonomi",
+      "Sosiologisk institutt"
+    ]
+  },
+  {
+    "name": "Fakultet for kunst, musikk og design",
+    "institutes": [
+      "Griegakademiet – Institutt for musikk",
+      "Institutt for design",
+      "Kunstakademiet – Institutt for samtidskunst"
+    ]
+  },
+  {
+    "name": "Sentre uten fakultetstilknytning",
+    "institutes": [
+      "Ocean Sustainability Bergen (OSB)",
+      "Sars-senteret"
+    ]
+  }
+]

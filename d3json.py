@@ -1,10 +1,16 @@
 import json
+import subprocess
 from collections import defaultdict
 from itertools import takewhile
 
 
-def read_json():
-    with open("courses.json", "r") as f:
+def format_jq(input_file, output_file):
+    with open(output_file, "w") as f:
+        subprocess.run(["jq", "-s", ".", input_file], stdout=f)
+
+
+def read_json(file):
+    with open(file, "r") as f:
         content = json.load(f)
 
     return content
@@ -20,7 +26,12 @@ def create_graph(courses):
     links = list()
 
     for course in courses:
-        nodes[course['code']] = {"id": course["code"], "name": course["name"], "description": "", "degree": 0}
+        nodes[course["code"]] = {
+            "id": course["code"],
+            "name": course["name"],
+            "description": "",
+            "degree": 0,
+        }
 
     for course in courses:
         if course["builds_on"]:
@@ -28,8 +39,8 @@ def create_graph(courses):
                 links.append(
                     {"source": course["code"], "target": req, "relationship": ""}
                 )
-                nodes[req]['degree'] += 1
-                nodes[course['code']]['degree'] += 1
+                nodes[req]["degree"] += 1
+                nodes[course["code"]]["degree"] += 1
 
     return {"nodes": list(nodes.values()), "links": links}
 
@@ -45,6 +56,8 @@ def find_course_codes(courses):
 
 
 if __name__ == "__main__":
-    file = read_json()
+    format_jq("courses.jl", "courses.json")
+    format_jq("faculties.jl", "faculties.json")
+    file = read_json("courses.json")
     write_json("graph.json", create_graph(file))
     write_json("codes.json", find_course_codes(file))

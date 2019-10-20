@@ -8,11 +8,11 @@ URL = "https://www.uib.no"
 def find_dependent_courses(content):
     result = []
     for i, title in enumerate(content.xpath("h3/text()").getall()):
-        if title.lower() == "Tilrådde forkunnskapar".lower():
+        if title.strip().lower() == "Tilrådde forkunnskapar".lower():
             sub_content = content[i].xpath("p/a")
             for dep_course in sub_content:
-                if dep_course.attrib['href'].startswith("/nb/emne"):
-                    result.append(dep_course.xpath("text()").get())
+                if dep_course.attrib["href"].startswith("/nb/emne"):
+                    result.append(dep_course.xpath("text()").get().strip())
 
             return result
 
@@ -30,8 +30,7 @@ class CoursesSpider(scrapy.Spider):
                 f"{URL}{course.attrib['href']}", callback=self.parse_course
             )
 
-    @staticmethod
-    def parse_course(response):
+    def parse_course(self, response):
         course = CourseItem()
         top = response.css(
             "div.content-top > div.block > div.content > div.item-list > ul > li"
@@ -46,5 +45,9 @@ class CoursesSpider(scrapy.Spider):
 
         content = response.css("div#uib-tabs-emnebeskrivelse > div")
         course["builds_on"] = find_dependent_courses(content)
+        institute = response.css("div.uib-study-belongs-to").xpath("a")
+        course["institute"] = (
+            institute.xpath("text()").get().strip() if institute else None
+        )
 
         return course

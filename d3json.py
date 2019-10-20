@@ -105,4 +105,5 @@ if __name__ == "__main__":
     uib = University("Universitetet i Bergen")
     courses_input = read_json("courses.json")
     uib.build_university(courses_input)
+    write_json("counts.json", uib.courses_at_institutes())
     write_json("graph.json", uib.create_graph())

@@ -11,9 +11,9 @@ import scrapy
 class CourseItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    url = scrapy.Field()
-    code = scrapy.Field()
+    id = scrapy.Field()
     name = scrapy.Field()
+    url = scrapy.Field()
     builds_on = scrapy.Field()
     institute = scrapy.Field()
 

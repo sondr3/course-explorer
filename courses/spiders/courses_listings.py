@@ -36,7 +36,7 @@ class CoursesSpider(scrapy.Spider):
             "div.content-top > div.block > div.content > div.item-list > ul > li"
         )
         course["name"] = response.css("h1::text").get().strip()
-        course["code"] = top[2].css("span::text")[1].get().strip()
+        course["id"] = top[2].css("span::text")[1].get().strip()
         course["url"] = response.url
         course["builds_on"] = None
 

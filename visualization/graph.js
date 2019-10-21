@@ -1,10 +1,10 @@
-const height = 1000,
-  width = 1000;
+const height = 1200,
+  width = 1200;
 
 const svg = d3
   .select("svg")
-  .attr("width", width)
-  .attr("height", height)
+  .attr("width", "95vw")
+  .attr("height", "95vh")
   .call(
     d3.zoom().on("zoom", function() {
       svg.attr("transform", d3.event.transform);
@@ -13,8 +13,6 @@ const svg = d3
   .append("g");
 
 const data = d3.json("graph.json").then(graph => {
-  console.log(graph);
-
   const simulation = d3
     .forceSimulation(graph.nodes)
     .force("charge", d3.forceManyBody())
@@ -22,6 +20,12 @@ const data = d3.json("graph.json").then(graph => {
       "link",
       d3.forceLink(graph.links).id(d => {
         return d.id;
+      })
+    )
+    .force(
+      "collide",
+      d3.forceCollide().radius(d => {
+        return d.degree + 15 * 3.5;
       })
     )
     .force("center", d3.forceCenter(width / 2, height / 2));
@@ -43,15 +47,22 @@ const data = d3.json("graph.json").then(graph => {
     .enter()
     .append("circle")
     .attr("r", d => d.degree)
-    .style("fill", "#69b3a2");
+    .style("fill", "#69b3a2")
+    .call(
+      d3
+        .drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended)
+    );
 
   node.append("title").text(d => {
     return d.name;
   });
 
   node.attr("r", d => {
-    const minRadius = 10;
-    return minRadius + d.degree * 3;
+    const minRadius = 15;
+    return minRadius + d.degree * 5;
   });
 
   simulation.nodes(graph.nodes).on("tick", ticked);
@@ -79,5 +90,22 @@ const data = d3.json("graph.json").then(graph => {
       .attr("cy", d => {
         return d.y;
       });
+  }
+
+  function dragstarted(d) {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+
+  function dragged(d) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+  }
+
+  function dragended(d) {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
   }
 });

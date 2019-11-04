@@ -1,18 +1,20 @@
 const height = 1200,
   width = 1200;
+let GRAPH = null;
 
-const svg = d3
-  .select("svg")
-  .attr("width", "95vw")
-  .attr("height", "95vh")
-  .call(
-    d3.zoom().on("zoom", function() {
-      svg.attr("transform", d3.event.transform);
-    })
-  )
-  .append("g");
+const makeGraph = (selector, graph) => {
+  console.log(graph);
+  const svg = d3
+    .select(selector)
+    .attr("width", "95vw")
+    .attr("height", "95vh")
+    .call(
+      d3.zoom().on("zoom", function() {
+        svg.attr("transform", d3.event.transform);
+      })
+    )
+    .append("g");
 
-const data = d3.json("graph.json").then(graph => {
   const simulation = d3
     .forceSimulation(graph.nodes)
     .force("charge", d3.forceManyBody())
@@ -108,4 +110,42 @@ const data = d3.json("graph.json").then(graph => {
     d.fx = null;
     d.fy = null;
   }
+};
+
+const fetchGraph = async () => {
+  try {
+    const resp = await fetch("graph.json");
+    return await resp.json();
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+const filterGraph = graph => {
+  let filtered = graph.nodes.filter(node => node.degree > 0);
+  return { nodes: filtered, links: graph.links };
+};
+
+fetchGraph("graph.json").then(graph => {
+  GRAPH = graph;
+  makeGraph("svg", filterGraph(graph));
+});
+
+const filterButton = document.getElementById("filter-button");
+let filtered = true;
+filterButton.addEventListener("click", () => {
+  if (filtered) {
+    filterButton.innerText = "Hide unconnected courses";
+    d3.select("svg")
+      .selectAll("*")
+      .remove();
+    makeGraph("svg", GRAPH);
+  } else {
+    filterButton.innerText = "Show all courses";
+    d3.select("svg")
+      .selectAll("*")
+      .remove();
+    makeGraph("svg", filterGraph(GRAPH));
+  }
+  filtered = !filtered;
 });

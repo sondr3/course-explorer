@@ -15,6 +15,8 @@ const makeGraph = (selector, graph) => {
     )
     .append("g");
 
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
+
   const simulation = d3
     .forceSimulation(graph.nodes)
     .force("charge", d3.forceManyBody())
@@ -49,7 +51,9 @@ const makeGraph = (selector, graph) => {
     .enter()
     .append("circle")
     .attr("r", d => d.degree)
-    .style("fill", "#69b3a2")
+    .attr("fill", d => {
+      return color(d.degree);
+    })
     .call(
       d3
         .drag()

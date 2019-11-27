@@ -4,7 +4,6 @@ with pkgs.python37Packages;
 let
   pythonPackages = python-packages: with python-packages; [
     ipython
-    jupyterlab
     scrapy
     virtualenvwrapper
     black

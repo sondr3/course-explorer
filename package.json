@@ -20,7 +20,7 @@
   "devDependencies": {
     "@sondr3/prettier": "^0.1.1",
     "d3": "^5.12.0",
-    "http-server": "^0.11.1",
+    "http-server": "^0.12.1",
     "prettier": "^1.18.2"
   },
   "prettier": "@sondr3/prettier"

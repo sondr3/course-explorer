@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "course-explorer"
+version = "0.1.0"
+description = ""
+authors = ["Sondre Nilsen <nilsen.sondre@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+scrapy = "^2.3.0"
+
+[tool.poetry.dev-dependencies]
+black = "^19.10b0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

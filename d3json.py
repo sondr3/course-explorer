@@ -1,6 +1,6 @@
 import json
 import subprocess
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from dataclasses import dataclass, field
 from itertools import takewhile
 from typing import List, Dict, Union, Set
@@ -77,10 +77,11 @@ class University:
             count = output[course.institute].get(code, 0)
             output[course.institute][code] = count + 1
 
+        output = dict(sorted(output.items()))
         return output
 
     def create_graph(self):
-        nodes = dict()
+        nodes = OrderedDict()
         links = list()
 
         for course in self.courses.values():
@@ -97,6 +98,7 @@ class University:
                         {"source": course.id, "target": req, "relationship": ""}
                     )
 
+        nodes = OrderedDict(sorted(nodes.items()))
         return {"nodes": list(nodes.values()), "links": links}
 
 

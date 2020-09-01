@@ -6,12 +6,12 @@ const makeGraph = (selector, graph) => {
   console.log(graph);
   const svg = d3
     .select(selector)
-    .attr("width", "95vw")
-    .attr("height", "95vh")
+    .attr("width", "100vw")
+    .attr("height", "80vh")
     .call(
-      d3.zoom().on("zoom", function() {
+      d3.zoom().on("zoom", function () {
         svg.attr("transform", d3.event.transform);
-      })
+      }),
     )
     .append("g");
 
@@ -22,15 +22,15 @@ const makeGraph = (selector, graph) => {
     .force("charge", d3.forceManyBody())
     .force(
       "link",
-      d3.forceLink(graph.links).id(d => {
+      d3.forceLink(graph.links).id((d) => {
         return d.id;
-      })
+      }),
     )
     .force(
       "collide",
-      d3.forceCollide().radius(d => {
+      d3.forceCollide().radius((d) => {
         return d.degree + 15 * 3.5;
-      })
+      }),
     )
     .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -50,23 +50,17 @@ const makeGraph = (selector, graph) => {
     .data(graph.nodes)
     .enter()
     .append("circle")
-    .attr("r", d => d.degree)
-    .attr("fill", d => {
+    .attr("r", (d) => d.degree)
+    .attr("fill", (d) => {
       return color(d.degree);
     })
-    .call(
-      d3
-        .drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended)
-    );
+    .call(d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended));
 
-  node.append("title").text(d => {
+  node.append("title").text((d) => {
     return d.name;
   });
 
-  node.attr("r", d => {
+  node.attr("r", (d) => {
     const minRadius = 15;
     return minRadius + d.degree * 5;
   });
@@ -76,24 +70,24 @@ const makeGraph = (selector, graph) => {
 
   function ticked() {
     link
-      .attr("x1", d => {
+      .attr("x1", (d) => {
         return d.source.x;
       })
-      .attr("y1", d => {
+      .attr("y1", (d) => {
         return d.source.y;
       })
-      .attr("x2", d => {
+      .attr("x2", (d) => {
         return d.target.x;
       })
-      .attr("y2", d => {
+      .attr("y2", (d) => {
         return d.target.y;
       });
 
     node
-      .attr("cx", d => {
+      .attr("cx", (d) => {
         return d.x;
       })
-      .attr("cy", d => {
+      .attr("cy", (d) => {
         return d.y;
       });
   }
@@ -125,12 +119,12 @@ const fetchGraph = async () => {
   }
 };
 
-const filterGraph = graph => {
-  let filtered = graph.nodes.filter(node => node.degree > 0);
+const filterGraph = (graph) => {
+  let filtered = graph.nodes.filter((node) => node.degree > 0);
   return { nodes: filtered, links: graph.links };
 };
 
-fetchGraph("graph.json").then(graph => {
+fetchGraph("graph.json").then((graph) => {
   GRAPH = graph;
   makeGraph("svg", filterGraph(graph));
 });
@@ -140,15 +134,11 @@ let filtered = true;
 filterButton.addEventListener("click", () => {
   if (filtered) {
     filterButton.innerText = "Hide unconnected courses";
-    d3.select("svg")
-      .selectAll("*")
-      .remove();
+    d3.select("svg").selectAll("*").remove();
     makeGraph("svg", GRAPH);
   } else {
     filterButton.innerText = "Show all courses";
-    d3.select("svg")
-      .selectAll("*")
-      .remove();
+    d3.select("svg").selectAll("*").remove();
     makeGraph("svg", filterGraph(GRAPH));
   }
   filtered = !filtered;

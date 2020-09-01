@@ -4,7 +4,7 @@
   "description": "An attempt at graphing course dependencies at UiB",
   "main": "index.js",
   "scripts": {
-    "dev": "http-server visualization",
+    "dev": "http-server docs",
     "fmt": "prettier --write"
   },
   "repository": {
